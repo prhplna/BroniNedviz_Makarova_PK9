@@ -1,0 +1,603 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище BroniNedviz_MakarovaModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Bronirovanie">
+          <Key>
+            <PropertyRef Name="BronID" />
+          </Key>
+          <Property Name="BronID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ObjectID" Type="int" />
+          <Property Name="ClientID" Type="int" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="DateGo" Type="date" />
+          <Property Name="DateEnd" Type="date" />
+          <Property Name="Count" Type="nvarchar" MaxLength="50" />
+          <Property Name="Oplata" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="ClientID" />
+          </Key>
+          <Property Name="ClientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameClient" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastNameClient" Type="nvarchar" MaxLength="50" />
+          <Property Name="OtchestvoClient" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateOfBirth" Type="date" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="GrafikUborki">
+          <Key>
+            <PropertyRef Name="GrafikID" />
+          </Key>
+          <Property Name="GrafikID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ObjectID" Type="int" />
+          <Property Name="Worker" Type="nvarchar" MaxLength="50" />
+          <Property Name="PeriodTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Objects">
+          <Key>
+            <PropertyRef Name="ObjectID" />
+          </Key>
+          <Property Name="ObjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="50" />
+          <Property Name="OwnerID" Type="int" />
+          <Property Name="CategoryObject" Type="nvarchar" MaxLength="50" />
+          <Property Name="StatusObject" Type="int" />
+        </EntityType>
+        <EntityType Name="OwnersObjects">
+          <Key>
+            <PropertyRef Name="OwnerID" />
+          </Key>
+          <Property Name="OwnerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameOwner" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastNameOwner" Type="nvarchar" MaxLength="50" />
+          <Property Name="OtchestvoOwner" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameRole" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="StatusObject">
+          <Key>
+            <PropertyRef Name="StatusID" />
+          </Key>
+          <Property Name="StatusID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameStatus" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameUser" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastNameUser" Type="nvarchar" MaxLength="50" />
+          <Property Name="RoleID" Type="int" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Bronirovanie_Clients">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Bronirovanie" Type="Self.Bronirovanie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="Bronirovanie">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bronirovanie_Objects">
+          <End Role="Objects" Type="Self.Objects" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Bronirovanie" Type="Self.Bronirovanie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Objects">
+              <PropertyRef Name="ObjectID" />
+            </Principal>
+            <Dependent Role="Bronirovanie">
+              <PropertyRef Name="ObjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bronirovanie_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Bronirovanie" Type="Self.Bronirovanie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Bronirovanie">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GrafikUborki_Objects">
+          <End Role="Objects" Type="Self.Objects" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="GrafikUborki" Type="Self.GrafikUborki" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Objects">
+              <PropertyRef Name="ObjectID" />
+            </Principal>
+            <Dependent Role="GrafikUborki">
+              <PropertyRef Name="ObjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Objects_OwnersObjects">
+          <End Role="OwnersObjects" Type="Self.OwnersObjects" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Objects" Type="Self.Objects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OwnersObjects">
+              <PropertyRef Name="OwnerID" />
+            </Principal>
+            <Dependent Role="Objects">
+              <PropertyRef Name="OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Objects_StatusObject">
+          <End Role="StatusObject" Type="Self.StatusObject" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Objects" Type="Self.Objects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusObject">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="Objects">
+              <PropertyRef Name="StatusObject" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище BroniNedviz_MakarovaModelContainer">
+          <EntitySet Name="Bronirovanie" EntityType="Self.Bronirovanie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GrafikUborki" EntityType="Self.GrafikUborki" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Objects" EntityType="Self.Objects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OwnersObjects" EntityType="Self.OwnersObjects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StatusObject" EntityType="Self.StatusObject" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Bronirovanie_Clients" Association="Self.FK_Bronirovanie_Clients">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Bronirovanie" EntitySet="Bronirovanie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bronirovanie_Objects" Association="Self.FK_Bronirovanie_Objects">
+            <End Role="Objects" EntitySet="Objects" />
+            <End Role="Bronirovanie" EntitySet="Bronirovanie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bronirovanie_Users" Association="Self.FK_Bronirovanie_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Bronirovanie" EntitySet="Bronirovanie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GrafikUborki_Objects" Association="Self.FK_GrafikUborki_Objects">
+            <End Role="Objects" EntitySet="Objects" />
+            <End Role="GrafikUborki" EntitySet="GrafikUborki" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Objects_OwnersObjects" Association="Self.FK_Objects_OwnersObjects">
+            <End Role="OwnersObjects" EntitySet="OwnersObjects" />
+            <End Role="Objects" EntitySet="Objects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Objects_StatusObject" Association="Self.FK_Objects_StatusObject">
+            <End Role="StatusObject" EntitySet="StatusObject" />
+            <End Role="Objects" EntitySet="Objects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BroniNedviz_MakarovaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Bronirovanie">
+          <Key>
+            <PropertyRef Name="BronID" />
+          </Key>
+          <Property Name="BronID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ObjectID" Type="Int32" />
+          <Property Name="ClientID" Type="Int32" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="DateGo" Type="DateTime" Precision="0" />
+          <Property Name="DateEnd" Type="DateTime" Precision="0" />
+          <Property Name="Count" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Oplata" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Clients" Relationship="Self.FK_Bronirovanie_Clients" FromRole="Bronirovanie" ToRole="Clients" />
+          <NavigationProperty Name="Objects" Relationship="Self.FK_Bronirovanie_Objects" FromRole="Bronirovanie" ToRole="Objects" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Bronirovanie_Users" FromRole="Bronirovanie" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="ClientID" />
+          </Key>
+          <Property Name="ClientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameClient" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastNameClient" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OtchestvoClient" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Bronirovanie" Relationship="Self.FK_Bronirovanie_Clients" FromRole="Clients" ToRole="Bronirovanie" />
+        </EntityType>
+        <EntityType Name="GrafikUborki">
+          <Key>
+            <PropertyRef Name="GrafikID" />
+          </Key>
+          <Property Name="GrafikID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ObjectID" Type="Int32" />
+          <Property Name="Worker" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PeriodTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Objects" Relationship="Self.FK_GrafikUborki_Objects" FromRole="GrafikUborki" ToRole="Objects" />
+        </EntityType>
+        <EntityType Name="Objects">
+          <Key>
+            <PropertyRef Name="ObjectID" />
+          </Key>
+          <Property Name="ObjectID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OwnerID" Type="Int32" />
+          <Property Name="CategoryObject" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StatusObject" Type="Int32" />
+          <NavigationProperty Name="Bronirovanie" Relationship="Self.FK_Bronirovanie_Objects" FromRole="Objects" ToRole="Bronirovanie" />
+          <NavigationProperty Name="GrafikUborki" Relationship="Self.FK_GrafikUborki_Objects" FromRole="Objects" ToRole="GrafikUborki" />
+          <NavigationProperty Name="OwnersObjects" Relationship="Self.FK_Objects_OwnersObjects" FromRole="Objects" ToRole="OwnersObjects" />
+          <NavigationProperty Name="StatusObject1" Relationship="Self.FK_Objects_StatusObject" FromRole="Objects" ToRole="StatusObject" />
+        </EntityType>
+        <EntityType Name="OwnersObjects">
+          <Key>
+            <PropertyRef Name="OwnerID" />
+          </Key>
+          <Property Name="OwnerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameOwner" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastNameOwner" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OtchestvoOwner" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Objects" Relationship="Self.FK_Objects_OwnersObjects" FromRole="OwnersObjects" ToRole="Objects" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameRole" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Users_Roles" FromRole="Roles" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="StatusObject">
+          <Key>
+            <PropertyRef Name="StatusID" />
+          </Key>
+          <Property Name="StatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Objects" Relationship="Self.FK_Objects_StatusObject" FromRole="StatusObject" ToRole="Objects" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastNameUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RoleID" Type="Int32" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Bronirovanie" Relationship="Self.FK_Bronirovanie_Users" FromRole="Users" ToRole="Bronirovanie" />
+          <NavigationProperty Name="Roles" Relationship="Self.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
+        </EntityType>
+        <Association Name="FK_Bronirovanie_Clients">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Bronirovanie" Type="Self.Bronirovanie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="Bronirovanie">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bronirovanie_Objects">
+          <End Role="Objects" Type="Self.Objects" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Bronirovanie" Type="Self.Bronirovanie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Objects">
+              <PropertyRef Name="ObjectID" />
+            </Principal>
+            <Dependent Role="Bronirovanie">
+              <PropertyRef Name="ObjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bronirovanie_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Bronirovanie" Type="Self.Bronirovanie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Bronirovanie">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GrafikUborki_Objects">
+          <End Role="Objects" Type="Self.Objects" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="GrafikUborki" Type="Self.GrafikUborki" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Objects">
+              <PropertyRef Name="ObjectID" />
+            </Principal>
+            <Dependent Role="GrafikUborki">
+              <PropertyRef Name="ObjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Objects_OwnersObjects">
+          <End Role="OwnersObjects" Type="Self.OwnersObjects" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Objects" Type="Self.Objects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OwnersObjects">
+              <PropertyRef Name="OwnerID" />
+            </Principal>
+            <Dependent Role="Objects">
+              <PropertyRef Name="OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Objects_StatusObject">
+          <End Role="StatusObject" Type="Self.StatusObject" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Objects" Type="Self.Objects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusObject">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="Objects">
+              <PropertyRef Name="StatusObject" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BroniNedviz_MakarovaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Bronirovanie" EntityType="Self.Bronirovanie" />
+          <EntitySet Name="Clients" EntityType="Self.Clients" />
+          <EntitySet Name="GrafikUborki" EntityType="Self.GrafikUborki" />
+          <EntitySet Name="Objects" EntityType="Self.Objects" />
+          <EntitySet Name="OwnersObjects" EntityType="Self.OwnersObjects" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" />
+          <EntitySet Name="StatusObject" EntityType="Self.StatusObject" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK_Bronirovanie_Clients" Association="Self.FK_Bronirovanie_Clients">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Bronirovanie" EntitySet="Bronirovanie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bronirovanie_Objects" Association="Self.FK_Bronirovanie_Objects">
+            <End Role="Objects" EntitySet="Objects" />
+            <End Role="Bronirovanie" EntitySet="Bronirovanie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bronirovanie_Users" Association="Self.FK_Bronirovanie_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Bronirovanie" EntitySet="Bronirovanie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GrafikUborki_Objects" Association="Self.FK_GrafikUborki_Objects">
+            <End Role="Objects" EntitySet="Objects" />
+            <End Role="GrafikUborki" EntitySet="GrafikUborki" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Objects_OwnersObjects" Association="Self.FK_Objects_OwnersObjects">
+            <End Role="OwnersObjects" EntitySet="OwnersObjects" />
+            <End Role="Objects" EntitySet="Objects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Objects_StatusObject" Association="Self.FK_Objects_StatusObject">
+            <End Role="StatusObject" EntitySet="StatusObject" />
+            <End Role="Objects" EntitySet="Objects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище BroniNedviz_MakarovaModelContainer" CdmEntityContainer="BroniNedviz_MakarovaEntities">
+          <EntitySetMapping Name="Bronirovanie">
+            <EntityTypeMapping TypeName="BroniNedviz_MakarovaModel.Bronirovanie">
+              <MappingFragment StoreEntitySet="Bronirovanie">
+                <ScalarProperty Name="BronID" ColumnName="BronID" />
+                <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="DateGo" ColumnName="DateGo" />
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Oplata" ColumnName="Oplata" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="BroniNedviz_MakarovaModel.Clients">
+              <MappingFragment StoreEntitySet="Clients">
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="NameClient" ColumnName="NameClient" />
+                <ScalarProperty Name="LastNameClient" ColumnName="LastNameClient" />
+                <ScalarProperty Name="OtchestvoClient" ColumnName="OtchestvoClient" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GrafikUborki">
+            <EntityTypeMapping TypeName="BroniNedviz_MakarovaModel.GrafikUborki">
+              <MappingFragment StoreEntitySet="GrafikUborki">
+                <ScalarProperty Name="GrafikID" ColumnName="GrafikID" />
+                <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
+                <ScalarProperty Name="Worker" ColumnName="Worker" />
+                <ScalarProperty Name="PeriodTime" ColumnName="PeriodTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Objects">
+            <EntityTypeMapping TypeName="BroniNedviz_MakarovaModel.Objects">
+              <MappingFragment StoreEntitySet="Objects">
+                <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+                <ScalarProperty Name="CategoryObject" ColumnName="CategoryObject" />
+                <ScalarProperty Name="StatusObject" ColumnName="StatusObject" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OwnersObjects">
+            <EntityTypeMapping TypeName="BroniNedviz_MakarovaModel.OwnersObjects">
+              <MappingFragment StoreEntitySet="OwnersObjects">
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+                <ScalarProperty Name="NameOwner" ColumnName="NameOwner" />
+                <ScalarProperty Name="LastNameOwner" ColumnName="LastNameOwner" />
+                <ScalarProperty Name="OtchestvoOwner" ColumnName="OtchestvoOwner" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="BroniNedviz_MakarovaModel.Roles">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="NameRole" ColumnName="NameRole" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatusObject">
+            <EntityTypeMapping TypeName="BroniNedviz_MakarovaModel.StatusObject">
+              <MappingFragment StoreEntitySet="StatusObject">
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="NameStatus" ColumnName="NameStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="BroniNedviz_MakarovaModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="BroniNedviz_MakarovaModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="NameUser" ColumnName="NameUser" />
+                <ScalarProperty Name="LastNameUser" ColumnName="LastNameUser" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

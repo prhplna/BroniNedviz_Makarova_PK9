@@ -1,0 +1,30 @@
+﻿<Window x:Class="BroniNedviz_Makarova.Windows.EditUser"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BroniNedviz_Makarova.Windows"
+        mc:Ignorable="d"
+        Title="Изменение пользователя" Height="250" Width="300" MinHeight="250" MinWidth="300" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Имя" HorizontalContentAlignment="Center" Margin="5"/>
+                <TextBox x:Name="TxtBxName" Height="30" Width="170" Margin="5"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Фамилия" HorizontalContentAlignment="Center" Margin="5"/>
+                <TextBox x:Name="TxtBxLastname" Height="30" Width="170" Margin="5"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Логин" HorizontalContentAlignment="Center" Margin="5"/>
+                <TextBox x:Name="TxtBxLogin" Height="30" Width="170" Margin="5"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Пароль" HorizontalContentAlignment="Center" Margin="5"/>
+                <PasswordBox x:Name="BoxPassw" Height="30" Width="170" Margin="5"/>
+            </StackPanel>
+            <Button Content="Изменить данные" x:Name="BtnEdit" Margin="5" Height="50" Width="110" Click="BtnEdit_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

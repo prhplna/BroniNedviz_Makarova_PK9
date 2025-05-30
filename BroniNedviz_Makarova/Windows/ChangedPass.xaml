@@ -1,0 +1,26 @@
+﻿<Window x:Class="BroniNedviz_Makarova.Windows.ChangedPass"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BroniNedviz_Makarova.Windows"
+        mc:Ignorable="d"
+        Title="Смена пароля" Height="250" Width="300" MinHeight="250" MinWidth="300" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Текущий пароль" HorizontalContentAlignment="Center" Margin="5"/>
+                <PasswordBox x:Name="PassOld" Height="30" Width="170" Margin="5"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Новый пароль" HorizontalContentAlignment="Center" Margin="5"/>
+                <PasswordBox x:Name="NewPassw" Height="30" Width="170" Margin="5"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Подтверждение" HorizontalContentAlignment="Center" Margin="5"/>
+                <PasswordBox x:Name="PasswPodtver" Height="30" Width="170" Margin="5"/>
+            </StackPanel>
+            <Button Content="Сменить пароль" x:Name="BtnSmenaPass" Margin="5" Height="50" Width="100" Click="BtnSmenaPass_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
